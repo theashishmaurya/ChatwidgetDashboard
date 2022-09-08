@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import { Hero } from "../components/layout";
+import { Container, Hero } from "../components/layout";
 import Footer from "../components/layout/footer/footer";
 import Navbar from "../components/layout/navbar";
 import Feature from "../components/layout/section/feature";
@@ -12,9 +12,12 @@ const Home: NextPage = () => {
         <title>Create Next App</title>
         <link rel='icon' href='/favicon.ico' />
       </Head>
-      <Navbar />
-      <Hero />
-      <Feature />
+      <Container>
+        <Navbar />
+        <Hero />
+        <Feature />
+      </Container>
+      <Footer />
     </div>
   );
 };

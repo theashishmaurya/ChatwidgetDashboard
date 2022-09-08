@@ -8,10 +8,6 @@ export default function LottiePlayer({
   animationData: any;
   style?: CSSProperties;
 }) {
-  const [isPaused, setIspaused] = useState(false);
-
-  const [isStopped, setIsStopped] = useState(false);
-
   const defaultOptions = {
     loop: true,
     autoplay: true,
@@ -21,12 +17,5 @@ export default function LottiePlayer({
     },
   };
 
-  return (
-    <Lottie
-      options={defaultOptions}
-      isStopped={isStopped}
-      isPaused={isPaused}
-      style={style}
-    />
-  );
+  return <Lottie options={defaultOptions} style={style} />;
 }
