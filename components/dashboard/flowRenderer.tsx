@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import ReactFlow, {
   Node,
   Edge,
@@ -9,24 +9,25 @@ import ReactFlow, {
   Connection,
   addEdge,
 } from "react-flow-renderer";
+import {
+  FlowButton,
+  FlowCheckbox,
+  FlowEnd,
+  FlowInput,
+  FlowMessage,
+  FlowStart,
+} from "./customComponent";
 
 const initialNodes: Node[] = [
   {
     id: "source",
-    type: "start",
+    type: "flowStart",
     data: { label: "Source" },
     position: { x: 5, y: 5 },
     // draggable: false,
     className: "source",
   },
-  {
-    id: "6",
-    type: "group",
-    data: { label: "Well" },
-    position: { x: 200, y: 200 },
-    // draggable: false,
-    className: "source",
-  },
+
   {
     id: "2",
     data: { label: "Node 2" },
@@ -41,26 +42,72 @@ const initialNodes: Node[] = [
   },
   {
     id: "4",
-    type: "end",
+    type: "flowEnd",
     data: { label: "End" },
     position: { x: 100, y: 100 },
     className: "end",
   },
   {
     id: "5",
-    type: "end",
+    type: "flowEnd",
     data: { label: "End" },
     position: { x: 100, y: 200 },
     className: "end-2",
   },
+
   {
-    id: "5",
-    type: "end",
-    data: { label: "End" },
-    position: { x: 200, y: 200 },
-    className: "end-2",
-    parentNode: "6",
+    id: "6",
+    type: "flowButton",
+    position: { x: 300, y: 300 },
+    data: { value: 123 },
+  },
+  {
+    id: "7",
+    type: "flowInput",
+    position: { x: 100, y: 300 },
+    data: { value: 123 },
+  },
+  {
+    id: "8",
+    type: "flowMessage",
+    position: { x: 10, y: 300 },
+    data: { value: 123 },
+  },
+
+  {
+    id: "9",
+    type: "group",
+    position: { x: 300, y: 400 },
+    data: { label: "Well" },
+    style: {
+      width: "400px",
+      height: "250px",
+      padding: "2rem",
+      background: "black",
+    },
+  },
+  {
+    id: "10",
+    position: { x: 10, y: 10 },
+    type: "flowMessage",
+    data: { label: null },
+    parentNode: "9",
     extent: "parent",
+  },
+  {
+    id: "11",
+    position: { x: 10, y: 120 },
+    type: "flowInput",
+    data: { label: null },
+    parentNode: "9",
+    extent: "parent",
+  },
+
+  {
+    id: "13",
+    position: { x: 420, y: 520 },
+    type: "flowCheckbox",
+    data: { label: null },
   },
 ];
 
@@ -92,11 +139,24 @@ export default function FlowRenderer() {
     [setEdges]
   );
 
+  const nodeTypes = useMemo(
+    () => ({
+      flowButton: FlowButton,
+      flowStart: FlowStart,
+      flowMessage: FlowMessage,
+      flowEnd: FlowEnd,
+      flowInput: FlowInput,
+      flowCheckbox: FlowCheckbox,
+    }),
+    []
+  );
+
   return (
     <ReactFlow
       nodes={nodes}
       edges={edges}
       fitView
+      nodeTypes={nodeTypes}
       onNodesChange={onNodesChange}
       onEdgesChange={onEdgesChange}
       onConnect={onConnect}
