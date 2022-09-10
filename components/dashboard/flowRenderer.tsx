@@ -15,6 +15,7 @@ import {
   FlowEnd,
   FlowInput,
   FlowMessage,
+  FlowRadio,
   FlowStart,
 } from "./customComponent";
 
@@ -109,6 +110,12 @@ const initialNodes: Node[] = [
     type: "flowCheckbox",
     data: { label: null },
   },
+  {
+    id: "14",
+    position: { x: 520, y: 620 },
+    type: "flowRadio",
+    data: { label: null },
+  },
 ];
 
 const initialEdges: Edge[] = [
@@ -147,6 +154,7 @@ export default function FlowRenderer() {
       flowEnd: FlowEnd,
       flowInput: FlowInput,
       flowCheckbox: FlowCheckbox,
+      flowRadio: FlowRadio,
     }),
     []
   );

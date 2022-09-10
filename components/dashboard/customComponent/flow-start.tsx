@@ -21,7 +21,7 @@ export default function FlowStart({ data }: any) {
   };
   return (
     <>
-      <Handle type='target' position={Position.Top} />
+      <Handle type='target' position={Position.Left} />
       <div
         className='bg-green-500 p-10 max-w-sm rounded-md shadow-md'
         onClick={handleEditing}
@@ -42,13 +42,7 @@ export default function FlowStart({ data }: any) {
         )}
       </div>
 
-      <Handle type='source' position={Position.Bottom} id='a' />
-      <Handle
-        type='source'
-        position={Position.Bottom}
-        id='b'
-        style={handleStyle}
-      />
+      <Handle type='source' position={Position.Right} />
     </>
   );
 }
