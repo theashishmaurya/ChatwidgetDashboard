@@ -1,12 +1,15 @@
-import { Handle, Position } from "react-flow-renderer";
+import { Handle, NodeProps, Position } from "react-flow-renderer";
 import { MouseEvent, useCallback, useState } from "react";
+import useRFStore from "../store";
 
 const handleStyle = { left: 10 };
 
-export default function FlowMessage({ data }: any) {
+export default function FlowMessage({ id, data }: NodeProps<{ text: string }>) {
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [text, setText] = useState<string>(
-    "Lorem ipsum dolor sit amet consectetur adipisicing elit. Non, animi tempore sint, tempora dolore ab minima maiores quibusdam ratione ut repellat. In provident dignissimos impedit nulla perferendis ea earum ut!"
+    data.text
+      ? data.text
+      : "Lorem ipsum dolor sit amet consectetur adipisicing elit. Non, animi tempore sint, tempora dolore ab minima maiores quibusdam ratione ut repellat. In provident dignissimos impedit nulla perferendis ea earum ut!"
   );
   const onChange = useCallback((evt: { target: { value: string } }) => {
     console.log(evt.target.value);
@@ -20,6 +23,11 @@ export default function FlowMessage({ data }: any) {
     setIsEditing(!isEditing);
   };
 
+  const updateNodeText = useRFStore().updateNodeText;
+
+  const handleSave = () => {
+    updateNodeText(id, text);
+  };
   return (
     <>
       <Handle type='target' position={Position.Left} />

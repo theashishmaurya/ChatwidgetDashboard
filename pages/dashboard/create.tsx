@@ -1,4 +1,4 @@
-import FlowRenderer from "../../components/dashboard/flowRenderer";
+import FlowRenderer from "../../components/dashboard/react-flow/flowRenderer";
 
 export default function Create() {
   return (

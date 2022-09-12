@@ -1,23 +1,30 @@
-import { Handle, Position } from "react-flow-renderer";
+import { Handle, Position, NodeProps } from "react-flow-renderer";
 import { useCallback, useState, MouseEvent } from "react";
+import useRFStore from "../store";
 
 const handleStyle = { left: 10 };
 
-export default function FlowStart({ data }: any) {
+export default function FlowStart({ id, data }: NodeProps<{ text: string }>) {
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [text, setText] = useState<string>(
-    "Lorem ipsum dolor sit amet consectetur adipisicing elit. Non, animi tempore sint, tempora dolore ab minima maiores quibusdam ratione ut repellat. In provident dignissimos impedit nulla perferendis ea earum ut!"
+    data.text
+      ? data.text
+      : "Lorem ipsum dolor sit amet consectetur adipisicing elit. Non, animi tempore sint, tempora dolore ab minima maiores quibusdam ratione ut repellat. In provident dignissimos impedit nulla perferendis ea earum ut!"
   );
   const onChange = useCallback((evt: { target: { value: string } }) => {
-    console.log(evt.target.value);
     setText(evt.target.value);
   }, []);
 
+  const updateNodeText = useRFStore().updateNodeText;
   const handleEditing = (
     e: MouseEvent<HTMLDivElement, globalThis.MouseEvent>
   ) => {
     e.preventDefault();
     setIsEditing(!isEditing);
+  };
+
+  const handleSave = () => {
+    updateNodeText(id, text);
   };
   return (
     <>
@@ -35,7 +42,9 @@ export default function FlowStart({ data }: any) {
               onClick={(e) => e.stopPropagation()}
             />
 
-            <div className='btn '>Save</div>
+            <div className='btn ' onClick={handleSave}>
+              Save
+            </div>
           </div>
         ) : (
           <div className='flex-wrap font-bold text-xl'>{text}</div>

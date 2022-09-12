@@ -1,27 +1,31 @@
-import { MouseEvent, useRef, useState } from "react";
+import { MouseEvent, useEffect, useRef, useState } from "react";
 import { customAlphabet } from "nanoid";
-import { Handle, Position } from "react-flow-renderer";
+import { Handle, NodeProps, Position } from "react-flow-renderer";
+import { shortId } from "../../utils/shortNanoId";
+import useRFStore, { NodeArrayData } from "../store";
 
-const alphabet =
-  "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-const nanoid = customAlphabet(alphabet, 5);
-
-export default function FlowRadio() {
-  const [radios, setRadios] = useState([
+export default function FlowCheckbox({ id, data }: NodeProps<any>) {
+  const [checkboxs, setCheckboxs] = useState<NodeArrayData>([
     {
-      id: nanoid(),
+      id: shortId(),
       name: "first",
     },
   ]);
   const [isAdding, setIsAdding] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
+  const updateGroupCustomNode = useRFStore().updateGroupCustomNode;
+
+  useEffect(() => {
+    updateGroupCustomNode(id, "checkboxs", checkboxs);
+    console.log(checkboxs);
+  }, [checkboxs]);
+
   const handleAddCheckBox = (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    console.log(inputRef.current?.value);
     let value = inputRef.current?.value;
     if (value) {
-      setRadios([...radios, { id: nanoid(), name: value }]);
+      setCheckboxs([...checkboxs, { id: shortId(), name: value }]);
       setIsAdding(false);
     }
   };
@@ -39,27 +43,38 @@ export default function FlowRadio() {
     e: MouseEvent<HTMLDivElement, globalThis.MouseEvent>,
     id: string
   ) => {
-    let UpdatedCheckbox = radios.filter((data) => data.id !== id);
+    let UpdatedCheckbox = checkboxs.filter((data) => data.id !== id);
 
-    setRadios(UpdatedCheckbox);
+    setCheckboxs(UpdatedCheckbox);
   };
+  /*
+
+  Todo
+  1. Add a Id 
+  2. Add A delete functionality
+
+  */
 
   return (
     <>
       <Handle type='target' position={Position.Left} />
 
       <div className='bg-orange-300 p-4 rounded-md w-86'>
-        {radios.map((obj, index) => {
+        {checkboxs.map((obj, index) => {
           return (
             <div
-              className='form-control bg-white my-2 p-2 rounded-md'
+              className='form-control bg-blue-600 my-2 p-2 rounded-md'
               key={index + 1}
             >
               <label className='cursor-pointer label'>
-                <span className='label-text text-black font-bold'>
+                <span className='label-text text-white font-bold'>
                   {obj.name}
                 </span>
-                <input type='radio' name={obj.name} className='radio mx-4 ' />
+                <input
+                  type='checkbox'
+                  defaultChecked
+                  className='checkbox mx-4 '
+                />
               </label>
               <div
                 className='btn'
