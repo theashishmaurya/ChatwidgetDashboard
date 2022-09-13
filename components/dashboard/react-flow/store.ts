@@ -12,7 +12,7 @@ import {
     applyNodeChanges,
     applyEdgeChanges,
   } from 'react-flow-renderer';
-import { initialEdges, initialNodes } from "../data";
+import { initialEdges, initialNodes } from "../utils/data";
 
 
 
@@ -22,12 +22,14 @@ export type groupFor = "checkboxs" | "radios"
 type RFState = {
     nodes : Node[],
     edges :Edge[],
-    onNodesChange : OnNodesChange;
-    onEdgesChange : OnEdgesChange;
-    onConnect : OnConnect
-    updateNodeText  :(nodeId : string , text :string) => void
-    updateInputNode : (nodeId : string , inputFor :string) => void
-    updateGroupCustomNode : (nodeId : string ,groupFor :groupFor, ArrayData : NodeArrayData) => void
+    onNodesChange : OnNodesChange,
+    onEdgesChange : OnEdgesChange,
+    onConnect : OnConnect,
+    addNode : (node:Node) => void,
+    deleteNode : (node:string) => void,
+    updateNodeText  :(nodeId : string , text :string) => void,
+    updateInputNode : (nodeId : string , inputFor :string) => void,
+    updateGroupCustomNode : (nodeId : string ,groupFor :groupFor, ArrayData : NodeArrayData) => void,
 }
 
 
@@ -52,6 +54,13 @@ const useRFStore = create <RFState>((set,get)=>({
         });
       },
 
+      addNode : (node : Node)=>{
+          set({ nodes : [...get().nodes,node]})
+      },
+
+      deleteNode : (nodeId : string)=>{
+          set({nodes : get().nodes.filter(node=>node.id !== nodeId)})
+      },
       // Updates the text of the node :)
       updateNodeText : (nodeId :string , text:string)=>{
         set({
@@ -79,6 +88,8 @@ const useRFStore = create <RFState>((set,get)=>({
         })
       },
 
+
+
       // Nodes such as Radio node and Checkbox Node
       updateGroupCustomNode :(nodeId:string , groupFor :groupFor , ArrayData : NodeArrayData)=>{
         set({
@@ -95,3 +106,5 @@ const useRFStore = create <RFState>((set,get)=>({
 
 
 export default useRFStore
+
+

@@ -1,15 +1,12 @@
-import { useCallback, useMemo, useState } from "react";
+import { nanoid } from "nanoid";
+import { useCallback, useMemo, useRef, useState } from "react";
 import ReactFlow, {
-  Node,
-  Edge,
-  applyNodeChanges,
-  applyEdgeChanges,
-  EdgeChange,
-  NodeChange,
-  Connection,
-  addEdge,
+  Background,
+  ReactFlowInstance,
+  ReactFlowProvider,
+  ReactFlowState,
 } from "react-flow-renderer";
-import { initialEdges } from "../data";
+import Sidebar from "../sidebar";
 import {
   FlowButton,
   FlowCheckbox,
@@ -19,31 +16,48 @@ import {
   FlowRadio,
   FlowStart,
 } from "./customComponent";
+import RfComponentSidebar from "./RFComponentSidebar";
 import useRFStore from "./store";
 
 export default function FlowRenderer() {
+  const [reactFlowInstance, setReactFlowInstance] =
+    useState<ReactFlowInstance>();
   const Nodes = useRFStore().nodes;
   const Edges = useRFStore().edges;
   const onNodesChange = useRFStore().onNodesChange;
   const onEdgesChange = useRFStore().onEdgesChange;
   const onConnect = useRFStore().onConnect;
+  const addNode = useRFStore().addNode;
+  const reactFlowWrapper = useRef(null);
 
-  //   Traverse(edges);
+  const onDragOver = useCallback((event: React.DragEvent) => {
+    event.preventDefault();
+    event.dataTransfer.dropEffect = "move";
+  }, []);
 
-  // const onNodesChange = useCallback(
-  //   (changes: NodeChange[]) =>
-  //     setNodes((nds) => applyNodeChanges(changes, nds)),
-  //   [setNodes]
-  // );
-  // const onEdgesChange = useCallback(
-  //   (changes: EdgeChange[]) =>
-  //     setEdges((eds) => applyEdgeChanges(changes, eds)),
-  //   [setEdges]
-  // );
-  // const onConnect = useCallback(
-  //   (connection: Connection) => setEdges((eds) => addEdge(connection, eds)),
-  //   [setEdges]
-  // );
+  const onDrop = useCallback(
+    (event: React.DragEvent<HTMLDivElement>) => {
+      event.preventDefault();
+      const reactFlowBounds = event.currentTarget.getBoundingClientRect();
+      const type = event.dataTransfer.getData("application/reactflow");
+
+      if (typeof type === "undefined" || !type) return;
+      if (reactFlowInstance) {
+        const position = reactFlowInstance.project({
+          x: event.clientX - reactFlowBounds.left,
+          y: event.clientY - reactFlowBounds.top,
+        });
+        const newNode = {
+          id: nanoid(10),
+          type,
+          position,
+          data: { label: `${type} node` },
+        };
+        addNode(newNode);
+      }
+    },
+    [reactFlowInstance]
+  );
 
   const nodeTypes = useMemo(
     () => ({
@@ -59,14 +73,28 @@ export default function FlowRenderer() {
   );
 
   return (
-    <ReactFlow
-      nodes={Nodes}
-      edges={Edges}
-      fitView
-      nodeTypes={nodeTypes}
-      onNodesChange={onNodesChange}
-      onEdgesChange={onEdgesChange}
-      onConnect={onConnect}
-    />
+    <div className='w-full h-full flex'>
+      <ReactFlowProvider />
+      <div>
+        <RfComponentSidebar />
+      </div>
+      <ReactFlow
+        ref={reactFlowWrapper}
+        nodes={Nodes}
+        edges={Edges}
+        fitView
+        onInit={setReactFlowInstance}
+        nodeTypes={nodeTypes}
+        deleteKeyCode={"Backspace"}
+        onNodesChange={onNodesChange}
+        onEdgesChange={onEdgesChange}
+        onConnect={onConnect}
+        onDrop={onDrop}
+        onDragOver={onDragOver}
+      >
+        <Background variant='lines' gap={80} size={1} className='bg-gray-600' />
+      </ReactFlow>
+      <ReactFlowProvider />
+    </div>
   );
 }

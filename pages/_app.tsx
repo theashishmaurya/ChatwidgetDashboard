@@ -10,7 +10,6 @@ function MyApp({ Component, pageProps, router }: AppProps) {
         <div>
           <Sidebar />
         </div>
-
         <Container>
           <Component {...pageProps} />
         </Container>
