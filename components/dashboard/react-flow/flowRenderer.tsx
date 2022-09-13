@@ -2,6 +2,7 @@ import { nanoid } from "nanoid";
 import { useCallback, useMemo, useRef, useState } from "react";
 import ReactFlow, {
   Background,
+  BackgroundVariant,
   ReactFlowInstance,
   ReactFlowProvider,
   ReactFlowState,
@@ -92,7 +93,12 @@ export default function FlowRenderer() {
         onDrop={onDrop}
         onDragOver={onDragOver}
       >
-        <Background variant='lines' gap={80} size={1} className='bg-gray-600' />
+        <Background
+          variant={BackgroundVariant.Lines}
+          gap={80}
+          size={1}
+          className='bg-gray-600'
+        />
       </ReactFlow>
       <ReactFlowProvider />
     </div>
