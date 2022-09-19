@@ -6,6 +6,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "aws-amplify": "^4.3.35",
     "daisyui": "^2.24.2",
     "nanoid": "^4.0.0",
     "next": "latest",

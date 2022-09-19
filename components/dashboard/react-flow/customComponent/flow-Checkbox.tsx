@@ -5,7 +5,7 @@ import { shortId } from "../../utils/shortNanoId";
 import useRFStore, { NodeArrayData } from "../store";
 
 export default function FlowCheckbox({ id, data }: NodeProps<any>) {
-  const [checkboxs, setCheckboxs] = useState<NodeArrayData>([
+  const [checkboxs, setCheckboxs] = useState<NodeArrayData[]>([
     {
       id: shortId(),
       name: "first",
@@ -18,7 +18,6 @@ export default function FlowCheckbox({ id, data }: NodeProps<any>) {
 
   useEffect(() => {
     updateGroupCustomNode(id, "checkboxs", checkboxs);
-    console.log(checkboxs);
   }, [checkboxs]);
 
   const handleAddCheckBox = (e: { preventDefault: () => void }) => {
@@ -47,13 +46,6 @@ export default function FlowCheckbox({ id, data }: NodeProps<any>) {
 
     setCheckboxs(UpdatedCheckbox);
   };
-  /*
-
-  Todo
-  1. Add a Id 
-  2. Add A delete functionality
-
-  */
 
   return (
     <>

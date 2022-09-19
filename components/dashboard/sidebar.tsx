@@ -24,7 +24,7 @@ export default function Sidebar() {
 
           <div className='divider before:bg-gray-600 after:bg-gray-600'></div>
 
-          <Link href='/'>
+          <Link href='/dashboard/create'>
             <li className='text-gray-200 bg-gray-600 rounded-full my-6  hover:text-white hover:rounded-md '>
               <a>
                 <FaTools fontSize={32} />
@@ -38,11 +38,14 @@ export default function Sidebar() {
             </a>
           </li>
 
-          <li className='text-gray-200 bg-gray-600 rounded-full my-6  hover:text-white hover:rounded-md'>
-            <a>
-              <FaRobot fontSize={32} />
-            </a>
-          </li>
+          <Link href={"/dashboard/preview"}>
+            <li className='text-gray-200 bg-gray-600 rounded-full my-6  hover:text-white hover:rounded-md'>
+              <a>
+                <FaRobot fontSize={32} />
+              </a>
+            </li>
+          </Link>
+
           <div className='divider before:bg-gray-600 after:bg-gray-600'></div>
 
           <li className='text-gray-200 bg-gray-600 rounded-full my-6  hover:text-white hover:rounded-md'>

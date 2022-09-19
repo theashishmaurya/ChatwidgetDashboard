@@ -5,9 +5,7 @@ import ReactFlow, {
   BackgroundVariant,
   ReactFlowInstance,
   ReactFlowProvider,
-  ReactFlowState,
 } from "react-flow-renderer";
-import Sidebar from "../sidebar";
 import {
   FlowButton,
   FlowCheckbox,
@@ -52,13 +50,21 @@ export default function FlowRenderer() {
           id: nanoid(10),
           type,
           position,
-          data: { label: `${type} node` },
+          data: {
+            label: `${type} node`,
+            run: function (id: string, fun: Function) {
+              console.log(id);
+              fun();
+            },
+          },
         };
         addNode(newNode);
       }
     },
     [reactFlowInstance]
   );
+
+  // console.log(Serialize(Nodes, Edges));
 
   const nodeTypes = useMemo(
     () => ({

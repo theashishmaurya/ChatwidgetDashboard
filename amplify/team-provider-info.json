@@ -1,0 +1,20 @@
+{
+  "staging": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-lazzybot-staging-151651-authRole",
+      "UnauthRoleArn": "arn:aws:iam::699533570168:role/amplify-lazzybot-staging-151651-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::699533570168:role/amplify-lazzybot-staging-151651-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-lazzybot-staging-151651-deployment",
+      "UnauthRoleName": "amplify-lazzybot-staging-151651-unauthRole",
+      "StackName": "amplify-lazzybot-staging-151651",
+      "StackId": "arn:aws:cloudformation:us-east-1:699533570168:stack/amplify-lazzybot-staging-151651/6d0b7a80-3509-11ed-a6fc-12cd2dc0a055",
+      "AmplifyAppId": "d34sofxqfiyutl"
+    },
+    "categories": {
+      "auth": {
+        "lazzyBot": {}
+      }
+    }
+  }
+}

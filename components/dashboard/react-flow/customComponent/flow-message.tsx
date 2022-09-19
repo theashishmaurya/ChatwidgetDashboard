@@ -12,7 +12,6 @@ export default function FlowMessage({ id, data }: NodeProps<{ text: string }>) {
       : "Lorem ipsum dolor sit amet consectetur adipisicing elit. Non, animi tempore sint, tempora dolore ab minima maiores quibusdam ratione ut repellat. In provident dignissimos impedit nulla perferendis ea earum ut!"
   );
   const onChange = useCallback((evt: { target: { value: string } }) => {
-    console.log(evt.target.value);
     setText(evt.target.value);
   }, []);
 
@@ -44,7 +43,9 @@ export default function FlowMessage({ id, data }: NodeProps<{ text: string }>) {
               onClick={(e) => e.stopPropagation()}
             />
 
-            <div className='btn '>Save</div>
+            <div className='btn' onClick={handleSave}>
+              Save
+            </div>
           </div>
         ) : (
           <div className='flex-wrap'>{text}</div>

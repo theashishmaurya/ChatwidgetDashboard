@@ -9,7 +9,7 @@ export default function FlowStart({ id, data }: NodeProps<{ text: string }>) {
   const [text, setText] = useState<string>(
     data.text
       ? data.text
-      : "Lorem ipsum dolor sit amet consectetur adipisicing elit. Non, animi tempore sint, tempora dolore ab minima maiores quibusdam ratione ut repellat. In provident dignissimos impedit nulla perferendis ea earum ut!"
+      : "This is the beginning of your flow. Click to edit this text."
   );
   const onChange = useCallback((evt: { target: { value: string } }) => {
     setText(evt.target.value);

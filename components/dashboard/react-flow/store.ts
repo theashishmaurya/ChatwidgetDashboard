@@ -16,7 +16,7 @@ import { initialEdges, initialNodes } from "../utils/data";
 
 
 
-export type NodeArrayData = {id:string,name:string}[]
+export type NodeArrayData = {id:string,name:string}
 export type groupFor = "checkboxs" | "radios"
 
 type RFState = {
@@ -29,11 +29,8 @@ type RFState = {
     deleteNode : (node:string) => void,
     updateNodeText  :(nodeId : string , text :string) => void,
     updateInputNode : (nodeId : string , inputFor :string) => void,
-    updateGroupCustomNode : (nodeId : string ,groupFor :groupFor, ArrayData : NodeArrayData) => void,
+    updateGroupCustomNode : (nodeId : string ,groupFor :groupFor, ArrayData : NodeArrayData[]) => void,
 }
-
-
-
 
 const useRFStore = create <RFState>((set,get)=>({
     nodes :initialNodes,
@@ -91,7 +88,7 @@ const useRFStore = create <RFState>((set,get)=>({
 
 
       // Nodes such as Radio node and Checkbox Node
-      updateGroupCustomNode :(nodeId:string , groupFor :groupFor , ArrayData : NodeArrayData)=>{
+      updateGroupCustomNode :(nodeId:string , groupFor :groupFor , ArrayData : NodeArrayData[])=>{
         set({
             nodes : get().nodes.map((node)=>{
                 if(node.id === nodeId){
