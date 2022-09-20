@@ -16,7 +16,7 @@ import { ParseNodes } from "./ParseNodes";
   }
 
   // Traverse the Node to find the End
-  export const Traverse = async (edges:Edge[] , nodes: Node[]) => {
+  export const Traverse =  (edges:Edge[] , nodes: Node[]) => {
 
     let  {SerializedGraph , DataMap  } = ParseNodes(nodes ,edges)
       let EndNodes = findEndNodes(nodes)
@@ -30,14 +30,14 @@ import { ParseNodes } from "./ParseNodes";
 
         if (!visited.has(currNode)) {
           visited.set(currNode, true);
-          console.log(currNode);
-
+          console.log(DataMap.get(currNode));
         //   if (currNode.type === "end" || currNode.type == "end") {
         //     console.log("Thankyou");
         //     break;
         //   }
         }
-        let edgesArr = Graph.get(currNode);
+        console.log(currNode)
+        let edgesArr = SerializedGraph.get(currNode);
         console.log(edgesArr);
         // Get the value from user
         // let value;
@@ -46,10 +46,12 @@ import { ParseNodes } from "./ParseNodes";
         //   stack = [];
         //   stack.push(value);
         // } 
-        
+
+
           for (let e of edgesArr) {
-            if (!visited.has(e)) {
-              stack.push(e);
+            console.log(e)
+            if (!visited.has(e.target)) {
+              stack.push(e.target);
             }
         }
       }

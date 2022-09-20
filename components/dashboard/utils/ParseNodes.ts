@@ -72,10 +72,12 @@ export const ParseNodes =(Node :Node[], Edge : Edge[])=>{
     })
 
     Edge.map((obj) => {
-        const { source, target } = obj;
+        
+        const { source,target } = obj;
+        
     
         if (SerializedGraph.has(source)) {
-          SerializedGraph.get(source).push({target});
+          SerializedGraph.get(source).push({target   });
         } else {
           SerializedGraph.set(source, [{target}]);
         }

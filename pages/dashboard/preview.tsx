@@ -1,8 +1,10 @@
-import { FormEvent, useRef, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 import Message from "../../components/dashboard/preview/message";
 import useRFStore from "../../components/dashboard/react-flow/store";
 import { ParseNodes } from "../../components/dashboard/utils/ParseNodes";
 import { Node } from "react-flow-renderer";
+import { getData } from "../../components/dashboard/utils/localStorage";
+import { Traverse } from "../../components/dashboard/utils/TraverseNodes";
 
 export default function Preview() {
   const [messages, setMessages] = useState<any>([
@@ -103,8 +105,21 @@ export default function Preview() {
     nextMessage(currentMessage);
   };
 
+
+
+
+  ///////////////////// new //////////////////////////////////
+
+
+   useEffect(() =>{
+
+    let Data = getData()
+    Traverse(Data.edges,Data.nodes)
+
+   },[])
+
   return (
-    <div className='flex justify-center flex-col'>
+    <div className='flex flex-col justify-center'>
       <div className='w-[50%] border-2 h-[90vh] flex flex-col overflow-y'>
         {messages.map((message: any, index: number) => (
           <div>
@@ -117,7 +132,7 @@ export default function Preview() {
           <input
             type='text'
             name='input'
-            className='input bg-gray-200'
+            className='bg-gray-200 input'
             ref={inputRef}
           />
           <button className='btn'>Send</button>
