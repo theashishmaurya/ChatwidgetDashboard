@@ -1,7 +1,12 @@
 import Link from "next/link";
 import { FaTools, FaSave, FaRobot, FaCog } from "react-icons/fa";
+import useRFStore from "./react-flow/store";
 
 export default function Sidebar() {
+  const saveData = useRFStore().saveData;
+  const handleSave = () => {
+    saveData();
+  };
   return (
     <div className='drawer drawer-mobile'>
       <input id='my-drawer-2' type='checkbox' className='drawer-toggle' />
@@ -45,6 +50,12 @@ export default function Sidebar() {
               </a>
             </li>
           </Link>
+
+          <li className='my-6 text-gray-200 bg-gray-600 rounded-full hover:text-white hover:rounded-md'>
+            <button className='btn' onClick={handleSave}>
+              Save
+            </button>
+          </li>
 
           <div className='divider before:bg-gray-600 after:bg-gray-600'></div>
 

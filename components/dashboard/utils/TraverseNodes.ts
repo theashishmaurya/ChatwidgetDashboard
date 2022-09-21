@@ -37,7 +37,7 @@ import { ParseNodes } from "./ParseNodes";
         //     break;
         //   }
         }
-        let edgesArr = Graph.get(currNode);
+        let edgesArr = SerializedGraph.get(currNode);
         console.log(edgesArr);
         // Get the value from user
         // let value;

@@ -13,6 +13,7 @@ import {
     applyEdgeChanges,
   } from 'react-flow-renderer';
 import { initialEdges, initialNodes } from "../utils/data";
+import { setData } from "../utils/localStorage";
 
 
 
@@ -30,6 +31,7 @@ type RFState = {
     updateNodeText  :(nodeId : string , text :string) => void,
     updateInputNode : (nodeId : string , inputFor :string) => void,
     updateGroupCustomNode : (nodeId : string ,groupFor :groupFor, ArrayData : NodeArrayData[]) => void,
+    saveData : ()=>void
 }
 
 const useRFStore = create <RFState>((set,get)=>({
@@ -99,6 +101,10 @@ const useRFStore = create <RFState>((set,get)=>({
             })
         })
       },
+
+      saveData : ()=>{
+        setData(get().nodes,get().edges)
+    },
 }))
 
 

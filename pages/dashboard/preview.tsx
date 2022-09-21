@@ -13,69 +13,9 @@ export default function Preview() {
 
   const Node = useRFStore().nodes;
   const Edge = useRFStore().edges;
-  const { SerializedGraph, DataMap } = ParseNodes(Node, Edge);
+  const { SerializedGraph, DataMap, getChildren } = ParseNodes(Node, Edge);
 
-  const displayMessage = (id: string) => {};
-
-  const findEndNodes = (Nodes: Node[]) => {
-    let EndNodes = new Map();
-    for (let i = 0; i < Nodes.length; i++) {
-      if (Nodes[i]?.type === "end") {
-        EndNodes.set(Nodes[i], "end");
-      }
-    }
-    return EndNodes;
-  };
-
-  let Reactchildren = `<div> yeap</div>`;
-  const Travel = () => {
-    let EndNodes = findEndNodes(Node);
-    let visited = new Map();
-
-    // while (true) {
-    let stack: string[] = [];
-    stack.push("source");
-
-    while (stack.length > 0) {
-      let currNode = stack.pop() as string;
-
-      if (!visited.has(currNode)) {
-        visited.set(currNode, true);
-
-        return DataMap.get(currNode)?.component as string;
-
-        // setMessages((prev: any) => [...prev, DataMap.get(currNode)?.component]);
-      }
-
-      let children = SerializedGraph.get(currNode);
-
-      if (children) {
-        for (let i = 0; i < children.length; i++) {
-          stack.push(children[i]);
-        }
-      }
-    }
-  };
-
-  //////////////////////////////////2nd approach///////////////////////////////
-
-  // const ref = useRef<HTMLDivElement>(null);
-
-  // if (typeof window !== "undefined") {
-  //   const MutationObserver = window.MutationObserver;
-  //   const observer = new MutationObserver((mutations) => {
-  //     mutations.forEach((mutation) => {
-  //       console.log(mutation);
-  //     });
-  //   });
-
-  //   const config = { attributes: true, childList: true, characterData: true };
-
-  //   if (ref && typeof ref.current != null) {
-  //     console.log(ref);
-  //     observer.observe(ref.current, config);
-  //   }
-  // }
+  console.log(getChildren(Edge));
 
   let currentMessage = "source";
 

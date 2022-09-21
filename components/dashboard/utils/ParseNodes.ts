@@ -85,8 +85,31 @@ export const ParseNodes =(Node :Node[], Edge : Edge[])=>{
           SerializedGraph.set(target, [{source}]);
         }
       });
-    
-      return {SerializedGraph,DataMap }};
+
+
+
+// Function returns a Map with key as the Node Id and value as the Node Children
+
+      const getChildren = (edges: Edge[])=>{
+
+        const getChildrens = new Map();
+
+        edges.forEach((edge)=>{
+            const {source,target} = edge
+            if(getChildrens.has(source)){
+                getChildrens.get(source).push(target)
+            }
+            else{
+                getChildrens.set(source,[target])
+            }
+        })
+
+        return getChildrens
+
+      }
+       
+      return {SerializedGraph,DataMap,getChildren}
+    };
     
   
 
